@@ -2,24 +2,27 @@
 
 Backend REST API for the CRM Lead Management System built for the SE Internship assessment.
 
-## Live Demo
-- Frontend: https://crm-rashmi-portal.vercel.app
-- Backend API: https://crm-rashmi-service.onrender.com
+## 📄 Full Project Documentation
+[View Complete Project Documentation](https://docs.google.com/document/d/1_nTql34SMKQrVGQsKEWIMuHRXF5eS48vaORhBix7HnM/edit?usp=sharing)
 
-## Tech Stack
+## 🔗 Links
+- **Frontend:** https://crm-rashmi-portal.vercel.app
+- **Backend:** https://crm-rashmi-service.onrender.com
+- **Demo Video:** [Watch on Loom](YOUR_LOOM_LINK)
+
+## 🔑 Test Credentials
+| Email | Password |
+|-------|----------|
+| admin@example.com | password123 |
+| rashmi@example.com | password123 |
+
+## 🛠 Tech Stack
 - Node.js + Express
 - PostgreSQL (Supabase)
 - JWT Authentication
 - bcryptjs for password hashing
 
-## Features
-- JWT-based authentication
-- Full CRUD for leads
-- Notes per lead
-- Dashboard stats API
-- Search and filtering (status, source, assigned salesperson)
-
-## Setup Instructions
+## ⚙️ Setup Instructions
 
 ### 1. Clone the repo
 ```bash
@@ -49,41 +52,43 @@ npm run dev
 
 Server runs on http://localhost:5000
 
-## Test Credentials
-| Email | Password |
-|-------|----------|
-| admin@example.com | password123 |
-| rashmi@example.com | password123 |
+## 🗄️ Database Design
 
-## API Endpoints
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | /api/auth/login | Login |
-| GET | /api/leads | Get all leads |
-| POST | /api/leads | Create lead |
-| GET | /api/leads/:id | Get lead + notes |
-| PUT | /api/leads/:id | Update lead |
-| DELETE | /api/leads/:id | Delete lead |
-| POST | /api/leads/:id/notes | Add note |
-| DELETE | /api/notes/:id | Delete note |
-| GET | /api/dashboard | Dashboard stats |
+Three tables connected via foreign keys:
 
-## Database Design
-- **users** — stores salesperson accounts with hashed passwords
-- **leads** — stores all lead data with status and deal value
-- **notes** — linked to leads via foreign key with ON DELETE CASCADE
+| Table | Description |
+|-------|-------------|
+| users | Salesperson accounts with hashed passwords |
+| leads | All lead data — name, company, status, deal value |
+| notes | Notes per lead, linked via `lead_id` FK with ON DELETE CASCADE |
 
-## Environment Variables
+## 📡 API Endpoints
+
+| Method | Endpoint | Auth | Description |
+|--------|----------|------|-------------|
+| POST | /api/auth/login | ❌ | Login, returns JWT |
+| GET | /api/leads | ✅ | Get all leads (supports search + filter) |
+| POST | /api/leads | ✅ | Create lead |
+| GET | /api/leads/:id | ✅ | Get single lead with notes |
+| PUT | /api/leads/:id | ✅ | Update lead |
+| DELETE | /api/leads/:id | ✅ | Delete lead |
+| POST | /api/leads/:id/notes | ✅ | Add note to lead |
+| DELETE | /api/notes/:id | ✅ | Delete note |
+| GET | /api/dashboard | ✅ | Stats summary |
+
+## 🌍 Environment Variables
+
 | Variable | Description |
 |----------|-------------|
 | PORT | Server port (default 5000) |
 | JWT_SECRET | Secret key for JWT signing |
 | DB_PASSWORD | Supabase PostgreSQL password |
 
-## Known Limitations
-- Render free tier spins down after inactivity — first request may take 30 seconds
+## ⚠️ Known Limitations
+- Render free tier sleeps after 15 min of inactivity — first request may take ~30 seconds to wake up
 - No pagination on leads list
 - No role-based access control
 
-## Reflection
-Building this project helped me understand how a real sales CRM works end to end. The most challenging part was migrating from SQLite to PostgreSQL on Supabase for proper cloud deployment. I learned how JWT authentication flows from login to protected API routes, how to structure a REST API with Express, and how to debug database connection issues across different environments.
+## 💭 Reflection
+
+The biggest challenge was migrating from SQLite to PostgreSQL for proper cloud deployment. I learned about connection pooling, IPv4/IPv6 networking differences, how Supabase session pooler works, and how to safely handle environment variables across local and production environments. I also learned how JWT middleware works as a gatekeeper for all protected routes and how bcrypt one-way hashing protects passwords even if the database is compromised.
