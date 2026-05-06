@@ -1,28 +1,36 @@
 const router = require('express').Router();
-const db = require('../db/database');
+const { pool } = require('../db/database');
 const auth = require('../middleware/auth');
 
 router.use(auth);
 
-router.post('/leads/:lead_id/notes', (req, res) => {
+router.post('/leads/:lead_id/notes', async (req, res) => {
   const { content } = req.body;
   if (!content) return res.status(400).json({ error: 'Note content is required.' });
 
-  const lead = db.prepare('SELECT id FROM leads WHERE id = ?').get(req.params.lead_id);
-  if (!lead) return res.status(404).json({ error: 'Lead not found.' });
+  try {
+    const lead = await pool.query('SELECT id FROM leads WHERE id = $1', [req.params.lead_id]);
+    if (lead.rows.length === 0) return res.status(404).json({ error: 'Lead not found.' });
 
-  const result = db.prepare(
-    'INSERT INTO notes (lead_id, content, created_by) VALUES (?, ?, ?)'
-  ).run(req.params.lead_id, content, req.user.name);
-
-  res.status(201).json(db.prepare('SELECT * FROM notes WHERE id = ?').get(result.lastInsertRowid));
+    const result = await pool.query(
+      'INSERT INTO notes (lead_id, content, created_by) VALUES ($1,$2,$3) RETURNING *',
+      [req.params.lead_id, content, req.user.name]
+    );
+    res.status(201).json(result.rows[0]);
+  } catch (err) {
+    res.status(500).json({ error: 'Server error.' });
+  }
 });
 
-router.delete('/notes/:id', (req, res) => {
-  const note = db.prepare('SELECT * FROM notes WHERE id = ?').get(req.params.id);
-  if (!note) return res.status(404).json({ error: 'Note not found.' });
-  db.prepare('DELETE FROM notes WHERE id = ?').run(req.params.id);
-  res.json({ message: 'Note deleted.' });
+router.delete('/notes/:id', async (req, res) => {
+  try {
+    const note = await pool.query('SELECT * FROM notes WHERE id = $1', [req.params.id]);
+    if (note.rows.length === 0) return res.status(404).json({ error: 'Note not found.' });
+    await pool.query('DELETE FROM notes WHERE id = $1', [req.params.id]);
+    res.json({ message: 'Note deleted.' });
+  } catch (err) {
+    res.status(500).json({ error: 'Server error.' });
+  }
 });
 
 module.exports = router;
