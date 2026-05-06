@@ -1,6 +1,6 @@
 # CRM Rashmi Service
 
-Backend REST API for the CRM Lead Management System built for the SE Internship assessment.
+Backend REST API for the CRM Lead Management System 
 
 ## 📄 Full Project Documentation
 [View Complete Project Documentation](https://docs.google.com/document/d/1_nTql34SMKQrVGQsKEWIMuHRXF5eS48vaORhBix7HnM/edit?usp=sharing)
