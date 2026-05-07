@@ -3,7 +3,7 @@
 Backend REST API for the CRM Lead Management System 
 
 ## 📄 Full Project Documentation
-[View Complete Project Documentation](https://docs.google.com/document/d/1_nTql34SMKQrVGQsKEWIMuHRXF5eS48vaORhBix7HnM/edit?usp=sharing)
+[View Complete Project Documentation](https://docs.google.com/document/d/1dmyBJrCm9WAt9mMHLWn-fVDW9ONAr_usApF42TjYXyA/edit?usp=sharing)
 
 ## 🔗 Links
 - **Frontend:** https://crm-rashmi-portal.vercel.app
