@@ -8,7 +8,7 @@ Backend REST API for the CRM Lead Management System
 ## 🔗 Links
 - **Frontend:** https://crm-rashmi-portal.vercel.app
 - **Backend:** https://crm-rashmi-service.onrender.com
-- **Demo Video:** [Watch demo]((https://drive.google.com/file/d/1e80M_J_5s01ooRv9SYLK3NDffAg91bE5/view?usp=drive_link))
+- **Demo Video:** [Watch demo](https://drive.google.com/file/d/1e80M_J_5s01ooRv9SYLK3NDffAg91bE5/view?usp=drive_link)
 
 ## 🔑 Test Credentials
 | Email | Password |
